@@ -1,0 +1,44 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // Make sure this plugin is correctly applied and you have the necessary dependencies
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    // Set your namespace to match your package name
+    namespace = "com.example.sample_map"
+    // Make sure these values are correctly set by Flutter plugin or manually
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    defaultConfig {
+        // Your unique application ID
+        applicationId = "com.example.sample_map"
+        // Flutter values for SDK versions
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode.toInteger() // Ensure versionCode is an integer
+        versionName = flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            // Set up your release signing configurations correctly
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}

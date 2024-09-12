@@ -1,0 +1,38 @@
+name: map_app
+description: A new Flutter project.
+
+publish_to: 'none' # Remove this line if you are planning to publish this package to pub.dev
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
+# dependencies:
+#   flutter:
+#     sdk: flutter
+#   google_maps_flutter: ^2.2.1 
+#   google_maps_cluster_manager: ^3.1.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_maps_flutter: ^2.0.10 # Example version, use the compatible latest
+  flutter_typeahead: ^5.2.0    # Updated version
+  http: ^1.2.2                 # Update to the latest compatible version
+  collection: ^1.18.0          # Update to the latest version
+  http_parser: ^4.0.2         # Update to the latest version
+  leak_tracker: ^10.0.5        # Update to the latest version
+  leak_tracker_flutter_testing: ^3.0.5 # Update to the latest version
+  material_color_utilities: ^0.11.1 # Update to the latest version
+  string_scanner: ^1.2.0       # Update to the latest version
+  test_api: ^0.7.2  
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/shangri-la.jpg
