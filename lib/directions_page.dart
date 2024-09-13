@@ -12,7 +12,7 @@ class DirectionsPage extends StatefulWidget {
 class _DirectionsPageState extends State<DirectionsPage> {
   late GoogleMapController _mapController; // Controller for Google Map
   final LatLng _initialPosition =
-      const LatLng(6.9271, 79.8612); // Initial map position (San Francisco)
+      const LatLng(6.9271, 79.8612); // Initial map position (Colombo)
   final TextEditingController _startController =
       TextEditingController(); // Controller for start location input
   final TextEditingController _endController =
@@ -21,6 +21,7 @@ class _DirectionsPageState extends State<DirectionsPage> {
   final Set<Polyline> _polylines = {}; // Set to store polylines for routes
   String _apiKey =
       'AIzaSyBvdWTRDRIKWd11ClIGYQrSfc883IEkRiw'; // Replace with your actual Google Maps API key
+  String _distance = ''; // Variable to store the distance
 
   @override
   void dispose() {
@@ -35,25 +36,48 @@ class _DirectionsPageState extends State<DirectionsPage> {
     _mapController = controller;
   }
 
-  // Function to fetch directions between two locations from Google Directions API
+  // Function to fetch directions and distance between two locations from Google APIs
   Future<void> _getDirections(String start, String end) async {
-    final String url =
+    final String urlDirections =
         'https://maps.googleapis.com/maps/api/directions/json?origin=$start&destination=$end&key=$_apiKey';
+    final String urlDistance =
+        'https://maps.googleapis.com/maps/api/distancematrix/json?origins=$start&destinations=$end&key=$_apiKey';
 
-    final response = await http.get(Uri.parse(url)); // Make an HTTP request
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body); // Decode the JSON response
+    try {
+      // Fetch the directions
+      final responseDirections = await http.get(Uri.parse(urlDirections));
+      final responseDistance = await http.get(Uri.parse(urlDistance));
 
-      if (data['routes'].isNotEmpty) {
-        final route = data['routes'][0]['overview_polyline']
-            ['points']; // Get the encoded polyline
-        _setMarkersAndRoute(
-            start, end, route); // Set markers and route on the map
+      if (responseDirections.statusCode == 200 &&
+          responseDistance.statusCode == 200) {
+        final dataDirections = json.decode(
+            responseDirections.body); // Decode the JSON response for directions
+        final dataDistance = json.decode(
+            responseDistance.body); // Decode the JSON response for distance
+
+        if (dataDirections['routes'].isNotEmpty) {
+          final route = dataDirections['routes'][0]['overview_polyline']
+              ['points']; // Get the encoded polyline
+          _setMarkersAndRoute(
+              start, end, route); // Set markers and route on the map
+
+          if (dataDistance['rows'][0]['elements'][0]['status'] == 'OK') {
+            final distance = dataDistance['rows'][0]['elements'][0]['distance']
+                ['text']; // Get the distance text
+            setState(() {
+              _distance = distance; // Store the distance in the state
+            });
+          } else {
+            print('Failed to fetch distance.');
+          }
+        } else {
+          print('No route found.');
+        }
       } else {
-        print('No route found.');
+        print('Failed to fetch directions or distance.');
       }
-    } else {
-      print('Failed to fetch directions.');
+    } catch (e) {
+      print('Error occurred while fetching directions or distance: $e');
     }
   }
 
@@ -91,9 +115,7 @@ class _DirectionsPageState extends State<DirectionsPage> {
   LatLng _getLatLngFromAddress(String address) {
     // For simplicity, using static locations; replace with dynamic location fetching if needed
     if (address.toLowerCase().contains('colombo')) {
-      return LatLng(6.9271, 79.8612); // San Francisco coordinates
-    } else if (address.toLowerCase().contains('colombo')) {
-      return LatLng(6.9271, 79.8612); // Los Angeles coordinates
+      return LatLng(6.9271, 79.8612); // Colombo coordinates
     } else {
       return _initialPosition; // Default position
     }
@@ -183,13 +205,24 @@ class _DirectionsPageState extends State<DirectionsPage> {
                   ),
                 ),
               ),
+              // Display the distance
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  color: Colors.white,
+                  child: Text(
+                    'Distance: $_distance',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              ),
             ],
           ),
           // Button to get directions
           Positioned(
             bottom: 20.0,
-            left: 20.0,
-            right: 20.0,
+            left: 70.0,
+            right: 70.0,
             child: ElevatedButton.icon(
               onPressed: () {
                 _getDirections(_startController.text, _endController.text);
@@ -197,7 +230,7 @@ class _DirectionsPageState extends State<DirectionsPage> {
               icon: Icon(Icons.directions),
               label: Text('Get Directions'),
               style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 15.0),
+                padding: EdgeInsets.symmetric(vertical: 10.0),
                 backgroundColor: Colors.blue, // Button color
                 foregroundColor: Colors.white, // Text and icon color
               ),
