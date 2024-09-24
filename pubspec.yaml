@@ -25,6 +25,7 @@ dependencies:
   material_color_utilities: ^0.11.1 # Update to the latest version
   string_scanner: ^1.2.0       # Update to the latest version
   test_api: ^0.7.2  
+  custom_info_window: ^1.0.1
 
 
 dev_dependencies:
