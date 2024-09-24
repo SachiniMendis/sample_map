@@ -26,7 +26,7 @@ class _AttractionsPageState extends State<AttractionsPage> {
   Future<void> _loadCustomMarker() async {
     final BitmapDescriptor customIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(
-          size: Size(2,2)), // Specify the size of the icon
+          size: Size(1,1)), // Specify the size of the icon
       'assets/shangri-la.jpg', // Path to the image asset
     );
 
@@ -48,26 +48,26 @@ class _AttractionsPageState extends State<AttractionsPage> {
       Marker(
         markerId: MarkerId('Galle Face Hotel, Colombo'),
         position: LatLng(6.9215, 79.8471),
-        icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
+        //icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
         infoWindow: InfoWindow(title: 'Galle Face Hotel, Colombo'),
       ),
       Marker(
         markerId: MarkerId('Cinnamon Grand Colombo'),
         position: LatLng(6.9181, 79.8470),
-        icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
+        //icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
         infoWindow: InfoWindow(title: 'Cinnamon Grand Colombo'),
       ),
       Marker(
         markerId: MarkerId('Jetwing Lighthouse, Galle'),
         position: LatLng(6.0481, 80.2053),
-        icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
+        //icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
         infoWindow: InfoWindow(title: 'Jetwing Lighthouse, Galle'),
       ),
       // Add more markers with the same custom icon
       Marker(
         markerId: MarkerId('Anantara Peace Haven Tangalle Resort'),
         position: LatLng(5.9890, 80.7557),
-        icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
+        //icon: _customIcon ?? BitmapDescriptor.defaultMarker, // Use custom icon
         infoWindow: InfoWindow(title: 'Anantara Peace Haven Tangalle Resort'),
       ),
       // Add the remaining markers with the same custom icon

@@ -10,7 +10,7 @@ class DirectionsPage extends StatefulWidget {
 }
 
 class _DirectionsPageState extends State<DirectionsPage> {
-  late GoogleMapController _mapController; // Controller for Google Map
+  late GoogleMapController _mapController; 
   final LatLng _initialPosition =
       const LatLng(6.9271, 79.8612); // Initial map position (Colombo)
   final TextEditingController _startController =
@@ -18,10 +18,10 @@ class _DirectionsPageState extends State<DirectionsPage> {
   final TextEditingController _endController =
       TextEditingController(); // Controller for end location input
   final Set<Marker> _markers = {}; // Set to store markers for map
-  final Set<Polyline> _polylines = {}; // Set to store polylines for routes
+  final Set<Polyline> _polylines = {}; 
   String _apiKey =
       'AIzaSyBvdWTRDRIKWd11ClIGYQrSfc883IEkRiw'; // Replace with your actual Google Maps API key
-  String _distance = ''; // Variable to store the distance
+  String _distance = ''; 
 
   @override
   void dispose() {
@@ -57,15 +57,15 @@ class _DirectionsPageState extends State<DirectionsPage> {
 
         if (dataDirections['routes'].isNotEmpty) {
           final route = dataDirections['routes'][0]['overview_polyline']
-              ['points']; // Get the encoded polyline
+              ['points']; 
           _setMarkersAndRoute(
               start, end, route); // Set markers and route on the map
 
           if (dataDistance['rows'][0]['elements'][0]['status'] == 'OK') {
             final distance = dataDistance['rows'][0]['elements'][0]['distance']
-                ['text']; // Get the distance text
+                ['text']; 
             setState(() {
-              _distance = distance; // Store the distance in the state
+              _distance = distance; 
             });
           } else {
             print('Failed to fetch distance.');
