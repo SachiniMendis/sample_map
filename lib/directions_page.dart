@@ -209,7 +209,7 @@ class _DirectionsPageState extends State<DirectionsPage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  color: Colors.white,
+                  color: const Color.fromARGB(255, 93, 241, 96),
                   child: Text(
                     'Distance: $_distance',
                     style: TextStyle(fontSize: 16),
