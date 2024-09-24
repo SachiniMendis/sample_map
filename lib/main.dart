@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart'; // For Google Maps
 import 'package:http/http.dart' as http; // HTTP client package
 
-import 'attractions_page.dart'; // Import the attractions page
+import 'custom_info_windows.dart'; // Import the custom info windows page
+//import 'attractions_page.dart'; // Import the attractions page
 import 'directions_page.dart'; // Import the directions page
 
 void main() => runApp(MyApp());
@@ -190,7 +191,7 @@ class _MapScreenState extends State<MapScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AttractionsPage()),
+                          builder: (context) => CustomInfoWindows()),
                     );
                   },
                   label: Text('Attractions'),
